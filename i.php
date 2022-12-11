@@ -24,7 +24,8 @@ function callback_handleEvent()
                     'message' => "Ваше сообщение получено! В ближайшее время админ группы на него ответит.",
                     'user_id' => $userId,
                     'access_token' => VK_API_ACCESS_TOKEN,
-                    'v' => '5.0'
+                    'v' => '5.131',
+                    'random_id' => rand(),
                 );
                 $get_params = http_build_query($request_params);
                 file_get_contents('https://api.vk.com/method/messages.send?' . $get_params);
