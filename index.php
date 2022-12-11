@@ -5,7 +5,7 @@ define('CALLBACK_API_EVENT_MESSAGE_NEW', 'message_new');
 
 require_once 'config.php';
 
-require_once 'api/vk_api.php';
+require_once 'vk_api.php';
 
 callback_handleEvent();
 
