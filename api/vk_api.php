@@ -16,34 +16,6 @@ function vkApi_usersGet($user_id) {
     ));
 }
 
-function vkApi_photosGetMessagesUploadServer($peer_id) {
-    return _vkApi_call('photos.getMessagesUploadServer', array(
-        'peer_id' => $peer_id,
-    ));
-}
-
-function vkApi_photosSaveMessagesPhoto($photo, $server, $hash) {
-    return _vkApi_call('photos.saveMessagesPhoto', array(
-        'photo'  => $photo,
-        'server' => $server,
-        'hash'   => $hash,
-    ));
-}
-
-function vkApi_docsGetMessagesUploadServer($peer_id, $type) {
-    return _vkApi_call('docs.getMessagesUploadServer', array(
-        'peer_id' => $peer_id,
-        'type'    => $type,
-    ));
-}
-
-function vkApi_docsSave($file, $title) {
-    return _vkApi_call('docs.save', array(
-        'file'  => $file,
-        'title' => $title,
-    ));
-}
-
 function _vkApi_call($method, $params = array()) {
     $params['access_token'] = VK_API_ACCESS_TOKEN;
     $params['v'] = VK_API_VERSION;
@@ -59,23 +31,6 @@ function _vkApi_call($method, $params = array()) {
     curl_close($curl);
 
     $response = json_decode($json, true);
-
+    echo $response;
     return $response['response'];
-}
-
-function vkApi_upload($url, $file_name) {
-
-    $curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, array('file' => new CURLfile($file_name)));
-    $json = curl_exec($curl);
-    $error = curl_error($curl);
-    if ($error) {
-        throw new Exception("Failed {$url} request");
-    }
-
-    curl_close($curl);
-
-    return json_decode($json, true);
 }
