@@ -2,7 +2,7 @@
 
 namespace db;
 
-class database {
+class Database {
     public object $connection;
     private string $host = '127.0.0.1';
     private string $port = '5432';
@@ -15,7 +15,13 @@ class database {
         if(!$this->connection) {
             echo "Error : Unable to open database\n";
         } else {
-            echo "Opened database successfully\n";
+            return $this->connection;
         }
+    }
+
+    public function dropTables() {
+        $query = "DROP TABLE IF EXISTS _user, _promise";
+        $stmt = $this->connection->prepare($query);
+        $stmt->execute();
     }
 }
