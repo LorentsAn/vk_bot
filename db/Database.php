@@ -5,7 +5,6 @@ namespace db;
 
 use PDO;
 use PDOException;
-use User;
 
 class Database {
     public PDO $connection;
@@ -41,10 +40,3 @@ class Database {
         $stmt->execute();
     }
 }
-
-$database = new Database();
-
-$db = $database->getConnection();
-$test_user_1 = new User(1, $db);
-$test_user_2 = new User(2, $db);
-$test_user_3 = new User(3, $db);

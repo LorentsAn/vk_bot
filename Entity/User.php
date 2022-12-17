@@ -23,7 +23,7 @@ class User {
     }
 
     public function updateBalance(int $new_balance) {
-        $query = "UPDATE " . $this->db_table . "SET balance = " . $new_balance . " WHERE id = " . $this->id . ";";
+        $query = "UPDATE " . $this->db_table . " SET balance = " . $new_balance . " WHERE id = " . $this->id . ";";
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
     }
@@ -33,8 +33,8 @@ class User {
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $this->balance = $dataRow['balance'];
+        $this->balance = (int)$dataRow['balance'];
+        return $this->balance;
     }
 
 }

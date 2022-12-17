@@ -1,6 +1,6 @@
 <?php
 
-class Promise {
+class Task {
     public int $id;
     public int $user_id;
     public string $task_name;
@@ -10,7 +10,7 @@ class Promise {
     public bool $is_completed;
 
     private PDO $connection;
-    private string $db_table = "_promise";
+    private string $db_table = "_task";
 
     public function __construct(int $id, int $user_id, string $task_name, string $completed_date,
                                 string $task, PDO $connection, int $cost = 10, bool $is_completed = false) {
@@ -25,10 +25,10 @@ class Promise {
     }
 
     public function toString(): string {
-        return $this->task . ". You started at " . $this->start_time . "and you should end in" . $this->completed_date . " for " . $this->cost . "points";
+        return $this->task . ". You should end in" . $this->completed_date . " for " . $this->cost . "points";
     }
 
-    private function createPromise() {
+    private function createTask(): bool {
         $query =    "INSERT INTO " . $this->db_table . " (id, user_id, task_name, completed_date, task, cost, is_completed )
                     VALUES ( $this->id , $this->user_id, $this->task_name, $this->completed_date, $this->task, $this->cost, $this->is_completed );";
         $stmt = $this->connection->prepare($query);
@@ -40,13 +40,9 @@ class Promise {
         return false;
     }
 
-    public function insert() {
+    public function insert(): int {
         $res = $this->getByName();
-        if ($res) {
-            // TODO если есть 1 или больше похожих задач
-        } else {
-            $this->createPromise();
-        }
+        $this->createTask();
         return $this->id;
     }
 

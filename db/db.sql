@@ -4,7 +4,7 @@ CREATE TABLE _user (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE _promise (
+CREATE TABLE _task (
     id INT NOT NULL PRIMARY KEY,
     user_id INT NOT NULL ,
     task_name CHAR (255) NOT NULL,
