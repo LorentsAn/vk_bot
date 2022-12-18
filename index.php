@@ -2,6 +2,8 @@
 
 require_once 'config.php';
 require_once 'bot/bot.php';
+require_once 'global.php';
+
 require_once 'MessageHandler.php';
 
 index();
@@ -10,16 +12,21 @@ function index() {
     $data = _callback_getEvent();
     $user_id = $data->object->user_id;
     //$user = get_user($user_id);
-    switch ($data->type) {
-        case 'confirmation':
-            _callback_handleConfirmation();
-            break;
+    try {
+        switch ($data->type) {
+            case 'confirmation':
+                _callback_handleConfirmation();
+                break;
 
-        case 'message_new':
-            _callback_handleMessageNew($data);
-            exit('ok');
-            break;
+            case 'message_new':
+                _callback_handleMessageNew($data);
+                exit('ok');
+                break;
+        }
+    } catch (Exception $e) {
+        log_error($e);
     }
+
 }
 
 function _callback_getEvent() {
@@ -48,6 +55,7 @@ function _callback_handleMessageNew($data) {
 }
 
 function _callback_okResponse() {
+    log_msg("Hello, log!");
     _callback_response('ok');
 }
 
