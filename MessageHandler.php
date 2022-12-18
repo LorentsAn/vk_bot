@@ -2,8 +2,6 @@
 
 //use action\ActionStorage;
 
-require_once 'action/ActionStorage.php';
-
 class MessageHandler {
     private ActionStorage $storage;
 
@@ -19,9 +17,18 @@ class MessageHandler {
         $action = $this->storage->getAction($args[COMMAND]);
         $value = $args[ARGUMENTS];
 
+        $db = new Database();
+        $connection = $db->getConnection();
+
+        $user = new User($chat_id, $connection);
+
+        if (!$user->existUser()) {
+            $user->createUser();
+        }
+
         if ($action) {
             try {
-                $action->execute($message->peer_id, $value);
+                $action->execute($chat_id, $value);
                 return 'ok';
             } catch (Exception $e) {
                 if ($chat_id == ADMIN_ID) {

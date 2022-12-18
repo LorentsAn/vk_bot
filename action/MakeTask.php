@@ -2,21 +2,12 @@
 
 //namespace action;
 
-use db\Database;
 
 class MakeTask extends Action
 {
 
     function execute(int $user_id, array $args): void
     {
-        $db = new Database();
-        $connection = $db->getConnection();
-
-        $user = new \User($user_id, $connection);
-        if (!$user->existUser()) {
-            $user->createUser();
-        }
-
         $values = $this->validateArgs($user_id, $args);
         if ($values == null) {
             $this->sendMessage($user_id, ERROR_OCCURRED);

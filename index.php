@@ -4,14 +4,21 @@ require_once 'config.php';
 require_once 'bot/bot.php';
 require_once 'global.php';
 
+require_once 'resourses/action_types.php';
+require_once 'resourses/arg_types.php';
+require_once 'resourses/strings.php';
+require_once 'db/Database.php';
+
+require_once 'Entity/User.php';
+require_once 'Entity/Task.php';
+
+require_once 'action/Action.php';
+require_once 'action/CloseTask.php';
+require_once 'action/GetScore.php';
+require_once 'action/MakeTask.php';
+require_once 'action/ActionStorage.php';
+
 require_once 'MessageHandler.php';
-require_once 'action\Action.php';
-require_once 'action\CloseTask.php';
-require_once 'action\GetScore.php';
-require_once 'action\MakeTask.php';
-require_once 'resourses\action_types.php';
-require_once 'resourses\arg_types.php';
-require_once 'resourses\strings.php';
 
 index();
 
@@ -30,7 +37,6 @@ function index() {
                 break;
         }
     } catch (Exception $e) {
-        echo "МЫ тут";
         log_error($e);
     }
 
