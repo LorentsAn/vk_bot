@@ -33,8 +33,7 @@ class Task
 
     public function createTask(): bool
     {
-        $query = "INSERT INTO " . $this->db_table . " (id, user_id, task_name, completed_date, task, cost, is_completed )
-                    VALUES ( $this->id , $this->user_id, $this->task_name, $this->completed_date, $this->task, $this->cost, $this->is_completed );";
+        $query = "INSERT INTO " . $this->db_table . " (id, user_id, task_name, completed_date, task, cost, is_completed ) VALUES ( $this->id , $this->user_id, $this->task_name, $this->completed_date, $this->task, $this->cost, $this->is_completed );";
         $stmt = $this->connection->prepare($query);
         if ($stmt->execute()) {
             $this->id = $this->connection->lastInsertId();

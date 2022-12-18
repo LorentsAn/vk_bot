@@ -48,6 +48,7 @@ class MakeTask extends Action
                         $this->sendMessage($user_id, EMPTY_NAME_OF_TASK);
                         return null;
                     }
+                    $value = "\'".$value."\'";
                     break;
                 case DATE:
                     if ($value == null) {
@@ -58,6 +59,7 @@ class MakeTask extends Action
                         $this->sendMessage($user_id, WRONG_DATA);
                         return null;
                     }
+                    $value = "\'".$value."\'";
                     break;
                 case COST:
                     if ($value != null) {

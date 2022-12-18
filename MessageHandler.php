@@ -28,7 +28,7 @@ class MessageHandler {
 
         if ($action) {
             try {
-                $action->execute($chat_id, $value);
+                $action->execute($user, $value);
                 return 'ok';
             } catch (Exception $e) {
                 if ($chat_id == ADMIN_ID) {
