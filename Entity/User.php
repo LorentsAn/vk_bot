@@ -28,13 +28,24 @@ class User {
         $stmt->execute();
     }
 
-    public function getUser() {
+    public function getBalance(): int {
         $query = "SELECT balance FROM " . $this->db_table . " WHERE id = " . $this->id . ";";
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->balance = (int)$dataRow['balance'];
         return $this->balance;
+    }
+
+    public function existUser(): bool {
+        $query = "SELECT * FROM " . $this->db_table . " WHERE id = " . $this->id . ";";
+        $stmt = $this->connection->prepare($query);
+        $stmt->execute();
+        $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($dataRow['balance'] == null) {
+            return false;
+        }
+        return true;
     }
 
 }

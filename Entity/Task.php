@@ -1,6 +1,7 @@
 <?php
 
-class Task {
+class Task
+{
     public int $id;
     public int $user_id;
     public string $task_name;
@@ -12,8 +13,9 @@ class Task {
     private PDO $connection;
     private string $db_table = "_task";
 
-    public function __construct(int $id, int $user_id, string $task_name, string $completed_date,
-                                string $task, PDO $connection, int $cost = 10, bool $is_completed = false) {
+    public function __construct(int    $id, int $user_id, string $task_name, string $completed_date,
+                                string $task, PDO $connection, int $cost = 10, bool $is_completed = false)
+    {
         $this->id = $id;
         $this->user_id = $user_id;
         $this->task_name = $task_name;
@@ -24,12 +26,14 @@ class Task {
         $this->connection = $connection;
     }
 
-    public function toString(): string {
-        return $this->task . ". You should end in" . $this->completed_date . " for " . $this->cost . "points";
+    public function toString(): string
+    {
+        return $this->task_name . ".\n $this->task \n You should end in" . $this->completed_date . " for " . $this->cost . "points";
     }
 
-    private function createTask(): bool {
-        $query =    "INSERT INTO " . $this->db_table . " (id, user_id, task_name, completed_date, task, cost, is_completed )
+    public function createTask(): bool
+    {
+        $query = "INSERT INTO " . $this->db_table . " (id, user_id, task_name, completed_date, task, cost, is_completed )
                     VALUES ( $this->id , $this->user_id, $this->task_name, $this->completed_date, $this->task, $this->cost, $this->is_completed );";
         $stmt = $this->connection->prepare($query);
         if ($stmt->execute()) {
@@ -40,13 +44,9 @@ class Task {
         return false;
     }
 
-    public function insert(): int {
-        $res = $this->getByName();
-        $this->createTask();
-        return $this->id;
-    }
 
-    private function getByName() {
+    private function getByName()
+    {
         $query = "SELECT * FROM " . $this->db_table . " WHERE task_name = $this->task_name";
         $stmt = $this->connection->prepare($query);
         $stmt->execute();

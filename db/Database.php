@@ -40,3 +40,18 @@ class Database {
         $stmt->execute();
     }
 }
+
+//
+//$database = new Database();
+//
+//$db = $database->getConnection();
+//$test_user_1 = new User(1, $db);
+//$test_user_1->createUser();
+//$test_user_2 = new User(2, $db);
+//$test_user_3 = new User(3, $db);
+//
+//$balance_1 = $test_user_1->getUser();
+//echo $test_user_1->balance;
+//$test_user_1->updateBalance(50);
+//$balance_2 = $test_user_1->getUser();
+//echo "изначально счет $balance_1 , потом $balance_2";

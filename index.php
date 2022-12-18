@@ -3,6 +3,7 @@
 require_once 'config.php';
 require_once 'bot/bot.php';
 require_once 'MessageHandler.php';
+
 index();
 
 function index() {
@@ -30,13 +31,19 @@ function _callback_handleConfirmation() {
 }
 
 function _callback_handleMessageNew($data) {
-    $message_text = $data->object->text;
-    $chat_id = $data->object->peer_id;
-    if($message_text){
-        bot_sendMessage($chat_id, $message_text, VK_API_ACCESS_TOKEN);
+//    $message_text = $data->object->text;
+//    $chat_id = $data->object->peer_id;
+//    if($message_text){
+//        bot_sendMessage($chat_id, $message_text, VK_API_ACCESS_TOKEN);
+//    }
+//    echo 'ok';
+    $handler = new MessageHandler();
+    $response = $handler->process_message($data);
+    if ($response == 'ok') {
+        _callback_okResponse();
+    } else {
+        _callback_response($response);
     }
-    echo 'ok';
-    //process_message($data);
 
 }
 
