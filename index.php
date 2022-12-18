@@ -5,6 +5,13 @@ require_once 'bot/bot.php';
 require_once 'global.php';
 
 require_once 'MessageHandler.php';
+require_once 'action\Action.php';
+require_once 'action\CloseTask.php';
+require_once 'action\GetScore.php';
+require_once 'action\MakeTask.php';
+require_once 'resourses\action_types.php';
+require_once 'resourses\arg_types.php';
+require_once 'resourses\strings.php';
 
 index();
 
@@ -20,10 +27,10 @@ function index() {
 
             case 'message_new':
                 _callback_handleMessageNew($data);
-                exit('ok');
                 break;
         }
     } catch (Exception $e) {
+        echo "МЫ тут";
         log_error($e);
     }
 
@@ -43,7 +50,7 @@ function _callback_handleMessageNew($data) {
 //    if($message_text){
 //        bot_sendMessage($chat_id, $message_text, VK_API_ACCESS_TOKEN);
 //    }
-//    echo 'ok';
+//    exit('ok');
     $handler = new MessageHandler();
     $response = $handler->process_message($data);
     if ($response == 'ok') {

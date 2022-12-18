@@ -1,6 +1,6 @@
 <?php
 
-namespace action;
+//namespace action;
 
 class CloseTask extends Action {
 

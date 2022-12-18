@@ -1,6 +1,6 @@
 <?php
 
-namespace action;
+//namespace action;
 
 class ActionStorage {
     private array $actions;
