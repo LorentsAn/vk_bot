@@ -9,7 +9,7 @@ abstract class Action
         bot_sendMessage($user_id, $message, VK_API_ACCESS_TOKEN);
     }
 
-    abstract function execute(int $user_id, array $args): void;
+    abstract function execute(User $user, array $args): void;
 
     abstract function validateArgs(int $user_id, array $args): ?array;
 }

@@ -6,17 +6,8 @@ use db\Database;
 
 class GetScore extends Action {
 
-    function execute(int $user_id, array $args): void
+    function execute(User $user, array $args): void
     {
-        $db = new Database();
-        $connection = $db->getConnection();
-
-        $user = new \User($user_id, $connection);
-        if (!$user->existUser()) {
-            $user->createUser();
-        }
-
-
         // TODO: Implement execute() method.
     }
 

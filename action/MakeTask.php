@@ -6,20 +6,20 @@
 class MakeTask extends Action
 {
 
-    function execute(int $user_id, array $args): void
+    function execute(User $user, array $args): void
     {
-        $values = $this->validateArgs($user_id, $args);
+        $values = $this->validateArgs($user->id, $args);
         if ($values == null) {
-            $this->sendMessage($user_id, ERROR_OCCURRED);
+            $this->sendMessage($user->id, ERROR_OCCURRED);
             return;
         }
         $values = $this->createDefaultValues($values);
-        $task = new \Task($this->createId(), $user_id, $values[NAME], $values[DATE], $values[TASK], $connection, $values[COST]);
+        $task = new Task($this->createId(), $user->id, $values[NAME], $values[DATE], $values[TASK], $user->getConnection(), $values[COST]);
 
         if ($task->createTask()) {
-            $this->sendMessage($user_id, $task->toString());
+            $this->sendMessage($user->id, $task->toString());
         } else {
-            $this->sendMessage($user_id, ERROR_OCCURRED);
+            $this->sendMessage($user->id, ERROR_OCCURRED);
         }
     }
 

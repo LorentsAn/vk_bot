@@ -4,7 +4,7 @@
 
 class CloseTask extends Action {
 
-    function execute(int $user_id, array $args): void
+    function execute(User $user, array $args): void
     {
         // TODO: Implement execute() method.
     }

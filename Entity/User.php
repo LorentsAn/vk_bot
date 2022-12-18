@@ -48,4 +48,8 @@ class User {
         return true;
     }
 
+    public function getConnection(): PDO {
+        return $this->connection;
+    }
+
 }
