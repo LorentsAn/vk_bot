@@ -94,7 +94,7 @@ class MakeTask extends Action
     private function createDefaultValues(array $values): array
     {
         if (!$values[TASK]) {
-            $values[TASK] = "";
+            $values[TASK] = "''";
         }
         if (!$values[COST]) {
             $values[COST] = 10;

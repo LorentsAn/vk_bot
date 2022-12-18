@@ -28,15 +28,18 @@ class Task
 
     public function toString(): string
     {
-        return $this->task_name . ".\n $this->task \n You should end in" . $this->completed_date . " for " . $this->cost . "points";
+        $task = $this->task;
+        if ($this->task = "''") {
+            $task = "";
+        }
+        return $this->task_name . ".\n $task \n You should end in " . $this->completed_date . " for " . $this->cost . " points";
     }
 
     public function createTask(): bool
     {
-        $query = "INSERT INTO " . $this->db_table . " (id, user_id, task_name, completed_date, task, cost, is_completed ) VALUES ( $this->id , $this->user_id, $this->task_name, $this->completed_date, $this->task, $this->cost, $this->is_completed );";
+        $query = "INSERT INTO " . $this->db_table . " (id, user_id, task_name, completed_date, task, cost) VALUES ( $this->id , $this->user_id, $this->task_name, $this->completed_date, $this->task, $this->cost );";
         $stmt = $this->connection->prepare($query);
         if ($stmt->execute()) {
-            $this->id = $this->connection->lastInsertId();
             return true;
         }
 

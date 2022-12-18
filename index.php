@@ -59,11 +59,12 @@ function _callback_handleMessageNew($data) {
 //    exit('ok');
     $handler = new MessageHandler();
     $response = $handler->process_message($data);
-    if ($response == 'ok') {
-        _callback_okResponse();
-    } else {
-        _callback_response($response);
-    }
+//    if ($response == 'ok') {
+//        _callback_okResponse();
+//    } else {
+//        _callback_response($response);
+//    }
+    echo "ok";
 
 }
 

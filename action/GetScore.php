@@ -1,19 +1,17 @@
 <?php
 
-//namespace action;
-
-use db\Database;
 
 class GetScore extends Action {
 
     function execute(User $user, array $args): void
     {
+        $output_message = sprintf(INFORMATION_ABOUT_BALANCE, $user->getBalance());
+        $this->sendMessage($user->id, $output_message);
         // TODO: Implement execute() method.
     }
 
     function validateArgs(int $user_id, array $args): ?array
     {
-        // TODO: Implement validateArgs() method.
-        return [];
+        return null;
     }
 }
