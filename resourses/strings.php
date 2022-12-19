@@ -2,6 +2,9 @@
 
 const INFORMATION_ABOUT_BALANCE = "Ваши баллы: \"%s\"";
 const INFORMATION_ABOUT_TASK = "========\"%s\"======== \n \"%s\" \n Необходимо закончить это к \"%s\" за \"%s\" баллов \n";
+const INFORMATION_ABOUT_COMPLETED_TASK = "Задание закончено. Название: \"%s\" \n \"%s\" \n Нужно было закончить к \"%s\". Стоило \"%s\" баллов\n";
+const INFORMATION_ABOUT_NOT_COMPLETED_TASK = "! Название: \"%s\" \n \"%s\" \n Нужно закончить к \"%s\". Стоило \"%s\" баллов\n";
+
 
 const THIS_USER_DOES_NOT_HAVE_TASK = "Вы не планировали еще задач";
 const TASK_WITH_NAME_ALREADY_EXIST = "Задача с таким именем уже существует. Попробуйте ввести новую или закончить старые";

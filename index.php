@@ -16,6 +16,7 @@ require_once 'action/Action.php';
 require_once 'action/CloseTask.php';
 require_once 'action/GetScore.php';
 require_once 'action/MakeTask.php';
+require_once 'action/GetAllTasks.php';
 require_once 'action/ActionStorage.php';
 
 require_once 'MessageHandler.php';
