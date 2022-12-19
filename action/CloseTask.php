@@ -31,7 +31,10 @@ class CloseTask extends Action {
     }
     private function getTask(User $user, array $task_array): Task {
         $task = $task_array[0];
-        return new Task($task['id'], $task['user_id'], $task['task_name'], $task['completed_date'], $task['task'], $user->getConnection(), $task['cost'], $task['is_completed']);
+        if (!$task['task']) {
+            $task['task'] = "''";
+        }
+        return new Task($task['id'], $task['user_id'], "'".trim($task['task_name'])."'", $task['completed_date'], $task['task'], $user->getConnection(), $task['cost'], $task['is_completed']);
     }
 
     function validateArgs(int $user_id, array $args): ?array
@@ -86,11 +89,11 @@ class CloseTask extends Action {
 
     private function validateLenArgs(int $user_id, int $len): bool {
         if ($len < MIN_LEN_ARGS_CLOSE_TASK) {
-            $this->sendMessage($user_id, FEW_ARGUMENTS_FOR_MAKE_TASK);
+            $this->sendMessage($user_id, FEW_ARGUMENTS_FOR_CLOSE_TASK);
             return false;
         }
         if ($len > MAX_LEN_ARGS_CLOSE_TASK) {
-            $this->sendMessage($user_id, A_LOT_ARGUMENTS_FOR_MAKE_TASK);
+            $this->sendMessage($user_id, A_LOT_ARGUMENTS_FOR_CLOSE_TASK);
         }
         return true;
     }
