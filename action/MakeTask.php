@@ -18,6 +18,7 @@ class MakeTask extends Action
 
         if (count($task->getByName()) != 0) {
             $this->sendMessage($user->id, TASK_WITH_NAME_ALREADY_EXIST);
+            return;
         }
         if ($task->createTask()) {
             $this->sendMessage($user->id, $task->toString());
@@ -51,7 +52,7 @@ class MakeTask extends Action
                         $this->sendMessage($user_id, EMPTY_NAME_OF_TASK);
                         return null;
                     }
-                    $value = "\'".$value."\'";
+                    $value = "'".$value."'";
                     break;
                 case DATE:
                     if ($value == null) {
@@ -62,7 +63,7 @@ class MakeTask extends Action
                         $this->sendMessage($user_id, WRONG_DATA);
                         return null;
                     }
-                    $value = "\'".$value."\'";
+                    $value = "'".$value."'";
                     break;
                 case COST:
                     if ($value != null) {
