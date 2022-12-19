@@ -11,7 +11,8 @@ class ActionStorage {
             CLOSE_TASK => new CloseTask(),
             GET_SCORE => new GetScore(),
             MAKE_TASK => new MakeTask(),
-            GEL_ALL_TASK => new GetAllTasks(),
+            GET_ALL_TASK => new GetAllTasks(),
+            GET_HELP => new GetHelp(),
             //TODO пишем классы действий
         );
     }
