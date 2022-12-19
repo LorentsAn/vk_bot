@@ -32,7 +32,7 @@ class Task
         if ($this->task = "''") {
             $task = "";
         }
-        return $this->task_name . ".\n $task \n You should end in " . $this->completed_date . " for " . $this->cost . " points";
+        return sprintf(INFORMATION_ABOUT_TASK, $this->task_name, $task, $this->completed_date, $this->cost);
     }
 
     public function createTask(): bool
@@ -42,14 +42,21 @@ class Task
         if ($stmt->execute()) {
             return true;
         }
-
         return false;
     }
 
 
-    private function getByName()
+    public function getByName()
     {
         $query = "SELECT * FROM " . $this->db_table . " WHERE task_name = $this->task_name";
+        $stmt = $this->connection->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getByUser()
+    {
+        $query = "SELECT * FROM " . $this->db_table . " WHERE user_id = $this->user_id";
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

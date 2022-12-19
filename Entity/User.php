@@ -37,6 +37,7 @@ class User {
         return $this->balance;
     }
 
+
     public function existUser(): bool {
         $query = "SELECT * FROM " . $this->db_table . " WHERE id = " . $this->id . ";";
         $stmt = $this->connection->prepare($query);
