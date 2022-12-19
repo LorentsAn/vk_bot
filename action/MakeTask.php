@@ -45,7 +45,8 @@ class MakeTask extends Action
                 continue;
             }
             $arg_type = trim(explode("=", $arg)[0]);
-            $value = str_replace("'", "", explode("=", $arg)[1]);
+            $value = trim(str_replace("'", "", explode("=", $arg)[1]));
+            $value = str_replace("\"", "", $value);
             switch ($arg_type) {
                 case NAME:
                     if ($value == null) {
