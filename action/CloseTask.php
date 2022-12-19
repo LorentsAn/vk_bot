@@ -20,12 +20,13 @@ class CloseTask extends Action {
             return;
         }
         $task = $this->getTask($user, $task_array);
-        $task->deleteTask();
+
         if ($values[IS_COMPLETED] == YES  || $values[IS_COMPLETED] == SHORT_YES) {
             $task->is_completed = true;
-            $task->createTask();
+            $task->updateCompletion();
             $user->updateBalance($task->cost);
         } else {
+            $task->deleteTask();
             $user->updateBalance(-$task->cost);
         }
     }
