@@ -45,10 +45,9 @@ class Task
         return false;
     }
 
-
     public function getByName()
     {
-        $query = "SELECT * FROM " . $this->db_table . " WHERE task_name = $this->task_name";
+        $query = "SELECT * FROM " . $this->db_table . " WHERE task_name = $this->task_name AND user_id = $this->user_id";
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -60,5 +59,14 @@ class Task
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteTask(): bool {
+        $query = "DELETE FROM " . $this->db_table . " WHERE id = $this->id";
+        $stmt = $this->connection->prepare($query);
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
     }
 }

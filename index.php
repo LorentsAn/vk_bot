@@ -7,6 +7,7 @@ require_once 'global.php';
 require_once 'resourses/action_types.php';
 require_once 'resourses/arg_types.php';
 require_once 'resourses/strings.php';
+require_once 'resourses/numbers.php';
 require_once 'db/Database.php';
 
 require_once 'Entity/User.php';

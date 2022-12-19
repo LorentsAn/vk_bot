@@ -35,11 +35,10 @@ class MakeTask extends Action
 
     function validateArgs(int $user_id, array $args): ?array
     {
-        $res = [];
-        if (count($args) < 2) {
-            $this->sendMessage($user_id, FEW_ARGUMENTS_FOR_MAKE_TASK);
+        if (!$this->validateLenArgs($user_id, count($args))) {
             return null;
         }
+        $res = [];
         foreach ($args as $arg) {
             if ($arg == null) {
                 continue;
@@ -105,5 +104,16 @@ class MakeTask extends Action
             $values[COST] = 10;
         }
           return $values;
+    }
+
+    private function validateLenArgs(int $user_id, int $len): bool {
+        if ($len < MIN_LEN_ARGS_MAKE_TASK) {
+            $this->sendMessage($user_id, FEW_ARGUMENTS_FOR_MAKE_TASK);
+            return false;
+        }
+        if ($len > MAX_LEN_ARGS_MAKE_TASK) {
+            $this->sendMessage($user_id, A_LOT_ARGUMENTS_FOR_MAKE_TASK);
+        }
+        return true;
     }
 }
