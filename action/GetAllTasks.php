@@ -12,7 +12,10 @@ class GetAllTasks extends Action
         }
         $output_string = "";
         foreach ($result as $task) {
-            $this->sendMessage($user->id, $this->toString($task));
+            if (strlen($output_string) > MAX_MESSAGE_LEN) {
+                $this->sendMessage($user->id, $output_string);
+                $output_string = "";
+            }
             $output_string = $output_string . $this->toString($task);
         }
         $this->sendMessage($user->id, $output_string);
@@ -21,7 +24,6 @@ class GetAllTasks extends Action
     private function toString(array $task): string {
         $task_name = $task[TASK_NAME];
         $completed_day = $task[COMPLETED_DATE];
-        $task_description = $task[TASK];
         $cost = $task[COST];
         $is_completed = $task[IS_COMPLETED];
         if ($is_completed) {

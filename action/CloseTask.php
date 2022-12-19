@@ -6,6 +6,7 @@ class CloseTask extends Action {
 
     function execute(User $user, array $args): void
     {
+        $values = $this->validateArgs($user->id, $args);
         // TODO: Implement execute() method.
     }
 
