@@ -12,10 +12,10 @@ class GetAllTasks extends Action
         }
         $output_string = "";
         foreach ($result as $task) {
+            $this->sendMessage($user->id, $this->toString($task));
             $output_string = $output_string . $this->toString($task);
         }
         $this->sendMessage($user->id, $output_string);
-        return;
     }
 
     private function toString(array $task): string {
@@ -24,11 +24,10 @@ class GetAllTasks extends Action
         $task_description = $task[TASK];
         $cost = $task[COST];
         $is_completed = $task[IS_COMPLETED];
-
         if ($is_completed) {
-            return sprintf(INFORMATION_ABOUT_COMPLETED_TASK, $task_name, $task_description, $completed_day, $cost);
+            return sprintf(INFORMATION_ABOUT_COMPLETED_TASK, $task_name, $completed_day, $cost);
         }
-        return  sprintf(INFORMATION_ABOUT_NOT_COMPLETED_TASK, $task_name, $task_description, $completed_day, $cost);
+        return  sprintf(INFORMATION_ABOUT_NOT_COMPLETED_TASK, $task_name,  $completed_day, $cost);
     }
 
     function validateArgs(int $user_id, array $args): ?array
