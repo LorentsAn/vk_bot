@@ -37,8 +37,9 @@ class MessageHandler {
                 }
             }
         } else {
-            return 'Метода не существует';
-            // TODO метода не существует => выдать ошибку
+            $action = $this->storage->getAction(GET_HELP);
+            $action ->execute($user, []);
+            return 'ok';
         }
         return "Возникла ошибка";
     }
