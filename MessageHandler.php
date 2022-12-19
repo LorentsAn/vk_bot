@@ -16,7 +16,6 @@ class MessageHandler {
         $args = $this->getArgs($message);
         $action = $this->storage->getAction($args[COMMAND]);
         $value = $args[ARGUMENTS];
-
         $db = new Database();
         $connection = $db->getConnection();
 
@@ -49,7 +48,7 @@ class MessageHandler {
         $command = explode(' ',trim($text))[0];
         $args = [];
         for ($i = 0; $i < 4; $i++) {
-            preg_match("/([A-Za-z]*\s*=\s*'[^']*')/ui", $text, $arg);
+            preg_match("/([A-Za-z]*\s*=\s*'*[^']*'*)/ui", $text, $arg);
             $text = str_replace($arg[0], '', $text);
             $args[] = $arg[0];
         }

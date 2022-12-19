@@ -12,9 +12,11 @@ class GetAllTasks extends Action
             $this->sendMessage($user->id, THIS_USER_DOES_NOT_HAVE_TASK);
             return;
         }
+        $output_string = "";
         foreach ($result as $task) {
-            $this->sendMessage($user->id, $task->toString());
+            $output_string = $output_string . $task->toString();
         }
+        $this->sendMessage($user->id, $output_string);
         return;
     }
 
