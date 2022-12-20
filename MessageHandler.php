@@ -37,7 +37,9 @@ class MessageHandler {
                 }
             }
         } else {
-            bot_sendMessage($user->id, INVALID_COMMAND, VK_API_ACCESS_TOKEN);
+            if ($args[COMMAND][0] == "\\") {
+                bot_sendMessage($user->id, INVALID_COMMAND, VK_API_ACCESS_TOKEN);
+            }
             return 'ok';
         }
         return ERROR_OCCURRED;
