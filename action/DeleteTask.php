@@ -17,7 +17,7 @@ class DeleteTask extends Action
             $this->sendMessage($group_id, TASK_WITH_NAME_NOT_EXIST);
             return;
         }
-        $task = $this->getTask($user, $task_array);
+        $task = $this->getTask($user, $group_id, $task_array);
         $task->deleteTask();
         $this->sendMessage($group_id, INFORMATION_ABOUT_DELETE_TASK);
         // TODO: Implement execute() method.

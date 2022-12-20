@@ -9,12 +9,12 @@ abstract class Action
         bot_sendMessage($user_id, $message, VK_API_ACCESS_TOKEN);
     }
 
-    protected function getTask(User $user, array $task_array): Task {
+    protected function getTask(User $user, int $group_id, array $task_array): Task {
         $task = $task_array[0];
         if (!$task[TASK]) {
             $task[TASK] = "''";
         }
-        return new Task($task[_ID], $task[USER_ID], "'".trim($task[TASK_NAME])."'", $task[COMPLETED_DATE], $task[TASK], $user->getConnection(), $task[COST], $task[IS_COMPLETED]);
+        return new Task($task[_ID], $task[USER_ID], $group_id, "'".trim($task[TASK_NAME])."'", $task[COMPLETED_DATE], $task[TASK], $user->getConnection(), $task[COST], $task[IS_COMPLETED]);
     }
 
     protected function getCommandAndArguments(string $arg): array {
