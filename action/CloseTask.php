@@ -25,6 +25,7 @@ class CloseTask extends Action {
             $task->is_completed = true;
             $task->updateCompletion();
             $user->updateBalance($task->cost);
+            $this->sendMessage($user->id, INFORMATION_ABOUT_STATUS);
         } else {
             $task->deleteTask();
             $user->updateBalance(-$task->cost);
