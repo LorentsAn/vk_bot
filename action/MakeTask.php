@@ -14,7 +14,7 @@ class MakeTask extends Action
             return;
         }
         $values = $this->createDefaultValues($values);
-        $task = new Task($this->createId(), $group_id, $group_id, $values[NAME], $values[DATE], $values[TASK], $user->getConnection(), $values[COST]);
+        $task = new Task($this->createId(), $user->id, $group_id, $values[NAME], $values[DATE], $values[TASK], $user->getConnection(), $values[COST]);
 
         if (count($task->getByName()) != 0) {
             $this->sendMessage($group_id, TASK_WITH_NAME_ALREADY_EXIST);
