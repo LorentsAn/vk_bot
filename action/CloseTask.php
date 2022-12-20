@@ -29,7 +29,7 @@ class CloseTask extends Action {
         } else {
             $task->deleteTask();
             $user->updateBalance($user->getBalance() - $task->cost);
-            $this->sendMessage($user->id, INFORMATION_ABOUT_STATUS);
+            $this->sendMessage($user->id, INFORMATION_ABOUT_FAIL_TASK);
         }
     }
     private function getTask(User $user, array $task_array): Task {
