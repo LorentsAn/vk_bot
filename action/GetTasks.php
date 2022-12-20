@@ -5,10 +5,6 @@ class GetTasks extends Action
     function execute(User $user, array $args): void
     {
         $values = $this->validateArgs($user->id, $args);
-        if ($values == null) {
-            $this->sendMessage($user->id, ERROR_OCCURRED);
-            return;
-        }
         $values = $this->createDefaultValues($values);
 
         $empty_task = new Task(0, $user->id, "", "", "", $user->getConnection(), 0);
@@ -29,13 +25,13 @@ class GetTasks extends Action
     }
 
     private function chooseTask(string $flag, array $task): string {
-        if ($flag == 'w') {
+        if ($flag == "'w'") {
             $completed_day = $task[COMPLETED_DATE];
             if (strtotime($completed_day) < strtotime("next Monday")
                 && strtotime($completed_day) >= strtotime("last Monday")) {
                 return $this->toString($task);
             }
-        } else if ($flag == 'a') {
+        } else if ($flag == "'a'") {
             return $this->toString($task);
         } else {
             $is_completed = $task[IS_COMPLETED];
