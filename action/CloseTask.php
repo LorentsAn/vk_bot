@@ -21,14 +21,14 @@ class CloseTask extends Action {
         }
         $task = $this->getTask($user, $task_array);
 
-        if ($values[IS_COMPLETED] == YES  || $values[IS_COMPLETED] == SHORT_YES) {
+        if ($values[COMPLETED] == YES  || $values[COMPLETED] == SHORT_YES) {
             $task->is_completed = true;
             $task->updateCompletion();
-            $user->updateBalance($task->cost);
+            $user->updateBalance($user->getBalance() + $task->cost);
             $this->sendMessage($user->id, INFORMATION_ABOUT_STATUS);
         } else {
             $task->deleteTask();
-            $user->updateBalance(-$task->cost);
+            $user->updateBalance($user->getBalance() - $task->cost);
         }
     }
     private function getTask(User $user, array $task_array): Task {
@@ -60,7 +60,7 @@ class CloseTask extends Action {
                     }
                     $value = "'".$value."'";
                     break;
-                case IS_COMPLETED:
+                case COMPLETED:
                     if ($value == null) {
                         $this->sendMessage($user_id, EMPTY_IS_COMPLETED_FIELD);
                         return null;
@@ -110,8 +110,8 @@ class CloseTask extends Action {
 
     private function createDefaultValues(array $values): array
     {
-        if ($values[IS_COMPLETED] == null) {
-            $values[IS_COMPLETED] = YES;
+        if ($values[COMPLETED] == null) {
+            $values[COMPLETED] = YES;
         }
         return $values;
     }
