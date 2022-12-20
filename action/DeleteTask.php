@@ -2,7 +2,6 @@
 
 class DeleteTask extends Action
 {
-
     function execute(User $user, array $args): void
     {
         $values = $this->validateArgs($user->id, $args);
@@ -20,7 +19,7 @@ class DeleteTask extends Action
         }
         $task = $this->getTask($user, $task_array);
         $task->deleteTask();
-        $this->sendMessage($user->id, INFORMATION_ABOUT_CLOSE_FAIL_TASK);
+        $this->sendMessage($user->id, INFORMATION_ABOUT_DELETE_TASK);
         // TODO: Implement execute() method.
     }
 
@@ -38,6 +37,7 @@ class DeleteTask extends Action
             $arg_type = trim(explode("=", $arg)[0]);
             $value = trim(str_replace("'", "", explode("=", $arg)[1]));
             $value = str_replace("\"", "", $value);
+            $value = str_replace(",", "", $value);
             if ($arg_type == NAME) {
                 if ($value == null) {
                     $this->sendMessage($user_id, EMPTY_NAME_OF_TASK);

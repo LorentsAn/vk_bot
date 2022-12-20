@@ -46,6 +46,7 @@ class MakeTask extends Action
             $arg_type = trim(explode("=", $arg)[0]);
             $value = trim(str_replace("'", "", explode("=", $arg)[1]));
             $value = str_replace("\"", "", $value);
+            $value = str_replace(",", "", $value);
             switch ($arg_type) {
                 case NAME:
                     if ($value == null) {

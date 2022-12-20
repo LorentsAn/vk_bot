@@ -1,9 +1,10 @@
 <?php
 
-class GetAllTasks extends Action
+class GetTasks extends Action
 {
     function execute(User $user, array $args): void
     {
+        $values = $this->validateArgs($user->id, $args);
         $empty_task = new Task(0, $user->id, "", "", "", $user->getConnection(), 0);
         $result = $empty_task->getByUser();
         if (count($result) == 0) {
