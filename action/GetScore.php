@@ -3,11 +3,11 @@
 
 class GetScore extends Action {
 
-    function execute(User $user, array $args): void
+    function execute(User $user, array $args, int $group_id): void
     {
         $balance = $user->getBalance();
         $output_message = sprintf(INFORMATION_ABOUT_BALANCE, $user->getBalance()) . $this->compareBalance($balance);
-        $this->sendMessage($user->id, $output_message);
+        $this->sendMessage($group_id, $output_message);
         // TODO: Implement execute() method.
     }
 
@@ -23,7 +23,7 @@ class GetScore extends Action {
         }
     }
 
-    function validateArgs(int $user_id, array $args): ?array
+    function validateArgs(int $group_id, array $args): ?array
     {
         return null;
     }

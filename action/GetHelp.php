@@ -4,13 +4,13 @@
 class GetHelp extends Action
 {
 
-    function execute(User $user, array $args): void
+    function execute(User $user, array $args, int $group_id): void
     {
-        $this->sendMessage($user->id, HELP_INFORMATION);
+        $this->sendMessage($group_id, HELP_INFORMATION);
         // TODO: Implement execute() method.
     }
 
-    function validateArgs(int $user_id, array $args): ?array
+    function validateArgs(int $group_id, array $args): ?array
     {
         return [];
     }

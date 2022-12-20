@@ -6,24 +6,24 @@
 class MakeTask extends Action
 {
 
-    function execute(User $user, array $args): void
+    function execute(User $user, array $args, int $group_id): void
     {
-        $values = $this->validateArgs($user->id, $args);
+        $values = $this->validateArgs($group_id, $args);
         if ($values == null) {
-            $this->sendMessage($user->id, ERROR_OCCURRED);
+            $this->sendMessage($group_id, ERROR_OCCURRED);
             return;
         }
         $values = $this->createDefaultValues($values);
-        $task = new Task($this->createId(), $user->id, $values[NAME], $values[DATE], $values[TASK], $user->getConnection(), $values[COST]);
+        $task = new Task($this->createId(), $group_id, $group_id, $values[NAME], $values[DATE], $values[TASK], $user->getConnection(), $values[COST]);
 
         if (count($task->getByName()) != 0) {
-            $this->sendMessage($user->id, TASK_WITH_NAME_ALREADY_EXIST);
+            $this->sendMessage($group_id, TASK_WITH_NAME_ALREADY_EXIST);
             return;
         }
         if ($task->createTask()) {
-            $this->sendMessage($user->id, $task->toString());
+            $this->sendMessage($group_id, $task->toString());
         } else {
-            $this->sendMessage($user->id, ERROR_OCCURRED);
+            $this->sendMessage($group_id, ERROR_OCCURRED);
         }
     }
 
@@ -33,9 +33,9 @@ class MakeTask extends Action
         return floor(($m - floor($m)) * 100000000);
     }
 
-    function validateArgs(int $user_id, array $args): ?array
+    function validateArgs(int $group_id, array $args): ?array
     {
-        if (!$this->validateLenArgs($user_id, count($args))) {
+        if (!$this->validateLenArgs($group_id, count($args))) {
             return null;
         }
         $res = [];
@@ -49,18 +49,18 @@ class MakeTask extends Action
             switch ($arg_type) {
                 case NAME:
                     if ($value == null) {
-                        $this->sendMessage($user_id, EMPTY_NAME_OF_TASK);
+                        $this->sendMessage($group_id, EMPTY_NAME_OF_TASK);
                         return null;
                     }
                     $value = "'".$value."'";
                     break;
                 case DATE:
                     if ($value == null) {
-                        $this->sendMessage($user_id, EMPTY_FINISH_DATE);
+                        $this->sendMessage($group_id, EMPTY_FINISH_DATE);
                         return null;
                     }
                     if (!$this->validateDate($value)) {
-                        $this->sendMessage($user_id, WRONG_DATE);
+                        $this->sendMessage($group_id, WRONG_DATE);
                         return null;
                     }
                     $value = "'".$value."'";
@@ -68,11 +68,11 @@ class MakeTask extends Action
                 case COST:
                     if ($value != null) {
                         if (!is_numeric($value)) {
-                            $this->sendMessage($user_id, ENTERED_PRICE_NOT_NUMBER);
+                            $this->sendMessage($group_id, ENTERED_PRICE_NOT_NUMBER);
                             return null;
                         }
                         if ($value > MAX_COST_FOR_TASK) {
-                            $this->sendMessage($user_id, TOO_BIG_COST);
+                            $this->sendMessage($group_id, TOO_BIG_COST);
                             $value = MAX_COST_FOR_TASK;
                         }
                     }
@@ -80,7 +80,7 @@ class MakeTask extends Action
             $res[$arg_type] = $value;
         }
         if (!$this->validateNecessaryFields($res)) {
-            $this->sendMessage($user_id, NO_REQUIRED_FIELDS_FOR_MAKE_TASK);
+            $this->sendMessage($group_id, NO_REQUIRED_FIELDS_FOR_MAKE_TASK);
             return null;
         }
         return $res;

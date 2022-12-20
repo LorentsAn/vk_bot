@@ -4,6 +4,7 @@ class Task
 {
     public int $id;
     public int $user_id;
+    public int $group_id;
     public string $task_name;
     public string $completed_date;
     public string $task;
@@ -13,11 +14,12 @@ class Task
     private PDO $connection;
     private string $db_table = "_task";
 
-    public function __construct(int    $id, int $user_id, string $task_name, string $completed_date,
+    public function __construct(int    $id, int $user_id, int $group_id, string $task_name, string $completed_date,
                                 string $task, PDO $connection, int $cost = 10, bool $is_completed = false)
     {
         $this->id = $id;
         $this->user_id = $user_id;
+        $this->group_id = $group_id;
         $this->task_name = $task_name;
         $this->is_completed = $is_completed;
         $this->completed_date = $completed_date;
@@ -37,7 +39,7 @@ class Task
 
     public function createTask(): bool
     {
-        $query = "INSERT INTO " . $this->db_table . " (id, user_id, task_name, completed_date, task, cost) VALUES ( $this->id , $this->user_id, $this->task_name, $this->completed_date, $this->task, $this->cost );";
+        $query = "INSERT INTO " . $this->db_table . " (id, user_id, group_id, task_name, completed_date, task, cost) VALUES ( $this->id , $this->user_id, $this->group_id, $this->task_name, $this->completed_date, $this->task, $this->cost );";
         $stmt = $this->connection->prepare($query);
         if ($stmt->execute()) {
             return true;
@@ -47,15 +49,15 @@ class Task
 
     public function getByName()
     {
-        $query = "SELECT * FROM " . $this->db_table . " WHERE task_name = $this->task_name AND user_id = $this->user_id;";
+        $query = "SELECT * FROM " . $this->db_table . " WHERE task_name = $this->task_name AND group_id = $this->group_id;";
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getByUser()
+    public function getByGroup()
     {
-        $query = "SELECT * FROM " . $this->db_table . " WHERE user_id = $this->user_id;";
+        $query = "SELECT * FROM " . $this->db_table . " WHERE group_id = $this->group_id;";
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

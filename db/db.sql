@@ -7,6 +7,7 @@ CREATE TABLE _user (
 CREATE TABLE _task (
     id INT NOT NULL PRIMARY KEY,
     user_id INT NOT NULL ,
+    group_id INT NOT NULL,
     task_name CHAR (255) NOT NULL,
     completed_date CHAR (10) NOT NULL,
     task TEXT,

@@ -2,26 +2,26 @@
 
 class GetTasks extends Action
 {
-    function execute(User $user, array $args): void
+    function execute(User $user, array $args, int $group_id): void
     {
-        $values = $this->validateArgs($user->id, $args);
+        $values = $this->validateArgs($group_id, $args);
         $values = $this->createDefaultValues($values);
 
-        $empty_task = new Task(0, $user->id, "", "", "", $user->getConnection(), 0);
-        $result = $empty_task->getByUser();
+        $empty_task = new Task(0, $user->id, $group_id, "", "", "", $user->getConnection(), 0);
+        $result = $empty_task->getByGroup();
         if (count($result) == 0) {
-            $this->sendMessage($user->id, THIS_USER_DOES_NOT_HAVE_TASK);
+            $this->sendMessage($group_id, THIS_USER_DOES_NOT_HAVE_TASK);
             return;
         }
         $output_string = HEADER_GET_TASK_COMMAND;
         foreach ($result as $task) {
             if (strlen($output_string) > MAX_MESSAGE_LEN) {
-                $this->sendMessage($user->id, $output_string);
+                $this->sendMessage($group_id, $output_string);
                 $output_string = "";
             }
             $output_string = $output_string . $this->chooseTask($values[FLAG], $task);
         }
-        $this->sendMessage($user->id, $output_string);
+        $this->sendMessage($group_id, $output_string);
     }
 
     private function chooseTask(string $flag, array $task): string {
@@ -57,7 +57,7 @@ class GetTasks extends Action
         return  sprintf(INFORMATION_ABOUT_NOT_COMPLETED_TASK, $task_name,  $completed_day, $cost);
     }
 
-    function validateArgs(int $user_id, array $args): ?array
+    function validateArgs(int $group_id, array $args): ?array
     {
         $res = [];
         foreach ($args as $arg) {
@@ -71,7 +71,7 @@ class GetTasks extends Action
 
             if ($arg_type == FLAG) {
                 if ($value == null) {
-                    $this->sendMessage($user_id, EMPTY_FLAG);
+                    $this->sendMessage($group_id, EMPTY_FLAG);
                     return null;
                 }
                 $res[FLAG] = "'".$value."'";

@@ -2,31 +2,31 @@
 
 class DeleteTask extends Action
 {
-    function execute(User $user, array $args): void
+    function execute(User $user, array $args, int $group_id): void
     {
-        $values = $this->validateArgs($user->id, $args);
+        $values = $this->validateArgs($group_id, $args);
         if ($values == null) {
-            $this->sendMessage($user->id, ERROR_OCCURRED);
+            $this->sendMessage($group_id, ERROR_OCCURRED);
             return;
         }
 
-        $helper = new Task(0, $user->id, $values[NAME], "", "", $user->getConnection());
+        $helper = new Task(0, $user->id, $group_id, $values[NAME], "", "", $user->getConnection());
         $task_array = $helper->getByName();
 
         if (count($task_array) == 0) {
-            $this->sendMessage($user->id, TASK_WITH_NAME_NOT_EXIST);
+            $this->sendMessage($group_id, TASK_WITH_NAME_NOT_EXIST);
             return;
         }
         $task = $this->getTask($user, $task_array);
         $task->deleteTask();
-        $this->sendMessage($user->id, INFORMATION_ABOUT_DELETE_TASK);
+        $this->sendMessage($group_id, INFORMATION_ABOUT_DELETE_TASK);
         // TODO: Implement execute() method.
     }
 
-    function validateArgs(int $user_id, array $args): ?array
+    function validateArgs(int $group_id, array $args): ?array
     {
         if (count($args) < MIN_LEN_ARGS_CLOSE_TASK) {
-            $this->sendMessage($user_id, FEW_ARGUMENTS_FOR_DELETE_TASK);
+            $this->sendMessage($group_id, FEW_ARGUMENTS_FOR_DELETE_TASK);
             return null;
         }
         $res = null;
@@ -41,7 +41,7 @@ class DeleteTask extends Action
 
             if ($arg_type == NAME) {
                 if ($value == null) {
-                    $this->sendMessage($user_id, EMPTY_NAME_OF_TASK);
+                    $this->sendMessage($group_id, EMPTY_NAME_OF_TASK);
                     return null;
                 }
                 $res[$arg_type] = "'".$value."'";
@@ -49,7 +49,7 @@ class DeleteTask extends Action
             }
         }
         if (!$this->validateNecessaryFields($res)) {
-            $this->sendMessage($user_id, NO_REQUIRED_FIELDS_FOR_DELETE_TASK);
+            $this->sendMessage($group_id, NO_REQUIRED_FIELDS_FOR_DELETE_TASK);
             return null;
         }
         return $res;

@@ -25,7 +25,7 @@ abstract class Action
         return array(COMMAND=>$arg_type, ARGUMENTS=>$value);
     }
 
-    abstract function execute(User $user, array $args): void;
+    abstract function execute(User $user, array $args, int $group_id): void;
 
-    abstract function validateArgs(int $user_id, array $args): ?array;
+    abstract function validateArgs(int $group_id, array $args): ?array;
 }

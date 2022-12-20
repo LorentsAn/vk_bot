@@ -10,6 +10,7 @@ class MessageHandler {
 
     public function process_message($data): string {
         $chat_id = $data->object->peer_id;
+        $user_id = $data->object->from_id;
         $message = $data->object->text;
 
         $args = $this->getArgs($message);
@@ -18,7 +19,7 @@ class MessageHandler {
         $db = new Database();
         $connection = $db->getConnection();
 
-        $user = new User($chat_id, $connection);
+        $user = new User($user_id, $connection);
 
         if (!$user->existUser()) {
             $user->createUser();
@@ -26,7 +27,7 @@ class MessageHandler {
 
         if ($action) {
             try {
-                $action->execute($user, $value);
+                $action->execute($user, $value, $chat_id);
                 return 'ok';
             } catch (Exception $e) {
                 if ($chat_id == ADMIN_ID) {

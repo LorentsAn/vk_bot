@@ -4,19 +4,19 @@
 
 class CloseTask extends Action {
 
-    function execute(User $user, array $args): void
+    function execute(User $user, array $args, int $group_id): void
     {
-        $values = $this->validateArgs($user->id, $args);
+        $values = $this->validateArgs($group_id, $args);
         if ($values == null) {
-            $this->sendMessage($user->id, ERROR_OCCURRED);
+            $this->sendMessage($group_id, ERROR_OCCURRED);
             return;
         }
         $values = $this->createDefaultValues($values);
-        $helper = new Task(0, $user->id, $values[NAME], "", "", $user->getConnection());
+        $helper = new Task(0, $user->id, $group_id, $values[NAME], "", "", $user->getConnection());
         $task_array = $helper->getByName();
 
         if (count($task_array) == 0) {
-            $this->sendMessage($user->id, TASK_WITH_NAME_NOT_EXIST);
+            $this->sendMessage($group_id, TASK_WITH_NAME_NOT_EXIST);
             return;
         }
         $task = $this->getTask($user, $task_array);
@@ -27,19 +27,19 @@ class CloseTask extends Action {
         if ($values[COMPLETED] == YES  || $values[COMPLETED] == SHORT_YES) {
             $task->updateStatus();
             $user->updateBalance($user->getBalance() + $task->cost);
-            $this->sendMessage($user->id, INFORMATION_ABOUT_STATUS);
+            $this->sendMessage($group_id, INFORMATION_ABOUT_STATUS);
         } else {
             //$task->deleteTask();
             $user->updateBalance($user->getBalance() - $task->cost);
-            $this->sendMessage($user->id, INFORMATION_ABOUT_CLOSE_FAIL_TASK);
+            $this->sendMessage($group_id, INFORMATION_ABOUT_CLOSE_FAIL_TASK);
         }
         $getScore = new GetScore();
-        $getScore->execute($user, []);
+        $getScore->execute($user, [], $group_id);
     }
 
-    function validateArgs(int $user_id, array $args): ?array
+    function validateArgs(int $group_id, array $args): ?array
     {
-        if (!$this->validateLenArgs($user_id, count($args))) {
+        if (!$this->validateLenArgs($group_id, count($args))) {
             return null;
         }
         $res = [];
@@ -53,17 +53,17 @@ class CloseTask extends Action {
             switch ($arg_type) {
                 case NAME:
                     if ($value == null) {
-                        $this->sendMessage($user_id, EMPTY_NAME_OF_TASK);
+                        $this->sendMessage($group_id, EMPTY_NAME_OF_TASK);
                         return null;
                     }
                     $value = "'".$value."'";
                     break;
                 case COMPLETED:
                     if ($value == null) {
-                        $this->sendMessage($user_id, EMPTY_IS_COMPLETED_FIELD);
+                        $this->sendMessage($group_id, EMPTY_IS_COMPLETED_FIELD);
                         return null;
                     }
-                    $value= $this->validateAnswer($user_id, $value);
+                    $value= $this->validateAnswer($group_id, $value);
                     if (!$value) {
                         return null;
                     }
@@ -72,7 +72,7 @@ class CloseTask extends Action {
             $res[$arg_type] = $value;
         }
         if (!$this->validateNecessaryFields($res)) {
-            $this->sendMessage($user_id, NO_REQUIRED_FIELDS_FOR_CLOSE_TASK);
+            $this->sendMessage($group_id, NO_REQUIRED_FIELDS_FOR_CLOSE_TASK);
             return null;
         }
         return $res;
