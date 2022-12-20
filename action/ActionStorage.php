@@ -13,6 +13,7 @@ class ActionStorage {
             MAKE_TASK => new MakeTask(),
             GET_ALL_TASK => new GetAllTasks(),
             GET_HELP => new GetHelp(),
+            DELETE_TASK => new DeleteTask(),
             //TODO пишем классы действий
         );
     }

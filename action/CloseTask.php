@@ -34,13 +34,6 @@ class CloseTask extends Action {
             $this->sendMessage($user->id, INFORMATION_ABOUT_CLOSE_FAIL_TASK);
         }
     }
-    private function getTask(User $user, array $task_array): Task {
-        $task = $task_array[0];
-        if (!$task['task']) {
-            $task['task'] = "''";
-        }
-        return new Task($task['id'], $task['user_id'], "'".trim($task['task_name'])."'", $task['completed_date'], $task['task'], $user->getConnection(), $task['cost'], $task['is_completed']);
-    }
 
     function validateArgs(int $user_id, array $args): ?array
     {
