@@ -64,10 +64,11 @@ class GetTasks extends Action
             if ($arg == null) {
                 continue;
             }
-            $arg_type = trim(explode("=", $arg)[0]);
-            $value = trim(str_replace("'", "", explode("=", $arg)[1]));
-            $value = str_replace("\"", "", $value);
-            $value = str_replace(",", "", $value);
+
+            $commandAndArg = $this->getCommandAndArguments($arg);
+            $arg_type = $commandAndArg[COMMAND];
+            $value = $commandAndArg[ARGUMENTS];
+
             if ($arg_type == FLAG) {
                 if ($value == null) {
                     $this->sendMessage($user_id, EMPTY_FLAG);

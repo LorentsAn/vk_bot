@@ -17,6 +17,14 @@ abstract class Action
         return new Task($task[_ID], $task[USER_ID], "'".trim($task[TASK_NAME])."'", $task[COMPLETED_DATE], $task[TASK], $user->getConnection(), $task[COST], $task[IS_COMPLETED]);
     }
 
+    protected function getCommandAndArguments(string $arg): array {
+        $arg_type = trim(explode("=", $arg)[0]);
+        $value = trim(str_replace("'", "", explode("=", $arg)[1]));
+        $value = str_replace("\"", "", $value);
+        $value = str_replace(",", "", $value);
+        return array(COMMAND=>$arg_type, ARGUMENTS=>$value);
+    }
+
     abstract function execute(User $user, array $args): void;
 
     abstract function validateArgs(int $user_id, array $args): ?array;
