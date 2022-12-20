@@ -4,14 +4,14 @@ require_once 'config.php';
 require_once 'bot/bot.php';
 require_once 'global.php';
 
-require_once 'resourses/action_types.php';
-require_once 'resourses/arg_types.php';
-require_once 'resourses/strings.php';
-require_once 'resourses/numbers.php';
+require_once 'resources/action_types.php';
+require_once 'resources/arg_types.php';
+require_once 'resources/strings.php';
+require_once 'resources/numbers.php';
 require_once 'db/Database.php';
 
-require_once 'Entity/User.php';
-require_once 'Entity/Task.php';
+require_once 'entity/User.php';
+require_once 'entity/Task.php';
 
 require_once 'action/Action.php';
 require_once 'action/CloseTask.php';
@@ -55,19 +55,8 @@ function _callback_handleConfirmation() {
 }
 
 function _callback_handleMessageNew($data) {
-//    $message_text = $data->object->text;
-//    $chat_id = $data->object->peer_id;
-//    if($message_text){
-//        bot_sendMessage($chat_id, $message_text, VK_API_ACCESS_TOKEN);
-//    }
-//    exit('ok');
     $handler = new MessageHandler();
     $response = $handler->process_message($data);
-//    if ($response == 'ok') {
-//        _callback_okResponse();
-//    } else {
-//        _callback_response($response);
-//    }
     echo "ok";
 
 }

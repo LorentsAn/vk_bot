@@ -1,6 +1,5 @@
 <?php
 
-//use action\ActionStorage;
 
 class MessageHandler {
     private ActionStorage $storage;
@@ -40,7 +39,7 @@ class MessageHandler {
             bot_sendMessage($user->id, INVALID_COMMAND, VK_API_ACCESS_TOKEN);
             return 'ok';
         }
-        return "Возникла ошибка";
+        return ERROR_OCCURRED;
     }
 
     public function getArgs(string $text): array
