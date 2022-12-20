@@ -21,16 +21,17 @@ class CloseTask extends Action {
         }
         $task = $this->getTask($user, $task_array);
 
+        $task->is_completed = true;
+        $task->updateCompletion();
+
         if ($values[COMPLETED] == YES  || $values[COMPLETED] == SHORT_YES) {
-            $task->is_completed = true;
-            $task->updateCompletion();
             $task->updateStatus();
             $user->updateBalance($user->getBalance() + $task->cost);
             $this->sendMessage($user->id, INFORMATION_ABOUT_STATUS);
         } else {
             //$task->deleteTask();
             $user->updateBalance($user->getBalance() - $task->cost);
-            $this->sendMessage($user->id, INFORMATION_ABOUT_FAIL_TASK);
+            $this->sendMessage($user->id, INFORMATION_ABOUT_CLOSE_FAIL_TASK);
         }
     }
     private function getTask(User $user, array $task_array): Task {
