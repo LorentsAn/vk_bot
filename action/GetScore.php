@@ -6,20 +6,20 @@ class GetScore extends Action {
     function execute(User $user, array $args): void
     {
         $balance = $user->getBalance();
-        $output_message = sprintf(INFORMATION_ABOUT_BALANCE, $user->getBalance());
+        $output_message = sprintf(INFORMATION_ABOUT_BALANCE, $user->getBalance()) . $this->compareBalance($balance);
         $this->sendMessage($user->id, $output_message);
         // TODO: Implement execute() method.
     }
 
-    function compareBalance(int $user_id, int $balance) {
+    function compareBalance(int $balance) {
         if ($balance < 0) {
-            $this->sendMessage($user_id, BAD_BALANCE);
+            return BAD_BALANCE;
         } else if ($balance > 0 && $balance < 100) {
-            $this->sendMessage($user_id, NORMAL_BALANCE);
+            return NORMAL_BALANCE;
         } else if ($balance > 100 && $balance < 300) {
-            $this->sendMessage($user_id, GOOD_BALANCE);
+            return GOOD_BALANCE;
         } else if ($balance > 300) {
-            $this->sendMessage($user_id, AWESOME_BALANCE);
+            return AWESOME_BALANCE;
         }
     }
 
