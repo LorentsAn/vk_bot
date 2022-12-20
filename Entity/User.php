@@ -43,7 +43,7 @@ class User {
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($dataRow['balance'] == null) {
+        if (count($dataRow) == 0) {
             return false;
         }
         return true;
