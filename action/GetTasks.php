@@ -13,7 +13,7 @@ class GetTasks extends Action
             $this->sendMessage($user->id, THIS_USER_DOES_NOT_HAVE_TASK);
             return;
         }
-        $output_string = "";
+        $output_string = HEADER_GET_TASK_COMMAND;
         foreach ($result as $task) {
             if (strlen($output_string) > MAX_MESSAGE_LEN) {
                 $this->sendMessage($user->id, $output_string);
