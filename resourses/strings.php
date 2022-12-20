@@ -3,7 +3,7 @@
 const VALID_MAKE_TASK_COMMAND = "\𝗆𝖺𝗄𝖾_𝗍𝖺𝗌𝗄 𝗇𝖺𝗆𝖾 = 𝖳𝖺𝗌𝗄 𝗇𝖺𝗆𝖾, 𝖽𝖺𝗍𝖾 = 𝟤𝟢𝟤𝟤-𝟣𝟢-𝟥𝟣, [𝗍𝖺𝗌𝗄 = 𝖳𝖺𝗌𝗄 𝖣𝖾𝗌𝖼𝗋𝗂𝗉𝗍𝗂𝗈𝗇], [𝖼𝗈𝗌𝗍 = 𝟣𝟢]";
 const VALID_CLOSE_TASK_COMMAND = "\𝖼𝗅𝗈𝗌𝖾_𝗍𝖺𝗌𝗄 𝗇𝖺𝗆𝖾 = 𝖳𝖺𝗌𝗄 𝗇𝖺𝗆𝖾, [𝗂𝗌_𝖼𝗈𝗆𝗉𝗅𝖾𝗍𝖾𝖽 = 𝗒𝖾𝗌] ";
 const VALID_GET_SCORE_COMMAND = "\𝗀𝖾𝗍_𝗌𝖼𝗈𝗋𝖾";
-const VALID_GET_ALL_TASK_COMMAND = "\𝗀𝖾𝗍_𝗍𝖺𝗌𝗄 [flag = a | c | w]";
+const VALID_GET_ALL_TASK_COMMAND = "\𝗀𝖾𝗍_𝗍𝖺𝗌𝗄s [flag = a | c | w]";
 const VALID_DELETE_TASK_COMMAND = "\delete name = 'Task name'";
 
 const HELP_INFORMATION = "Привет! Это бот которые поможет тебе управляться со своими дедлайнами и задачами! \n

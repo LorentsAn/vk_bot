@@ -82,8 +82,8 @@ class GetTasks extends Action
 
     private function createDefaultValues(array $values): array
     {
-        if (!$values[FLAG]) {
-            $values[FLAG] = 'c';
+        if ($values[FLAG] == null) {
+            $values[FLAG] = "'c'";
         }
         return $values;
     }
