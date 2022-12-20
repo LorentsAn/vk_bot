@@ -26,7 +26,11 @@ class GetAllTasks extends Action
         $completed_day = $task[COMPLETED_DATE];
         $cost = $task[COST];
         $is_completed = $task[IS_COMPLETED];
+        $fail = $task[FAIL];
         if ($is_completed) {
+            if ($fail) {
+                return sprintf(INFORMATION_ABOUT_FAIL_TASK, $task_name, $completed_day, $cost);
+            }
             return sprintf(INFORMATION_ABOUT_COMPLETED_TASK, $task_name, $completed_day, $cost);
         }
         return  sprintf(INFORMATION_ABOUT_NOT_COMPLETED_TASK, $task_name,  $completed_day, $cost);

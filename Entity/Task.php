@@ -61,7 +61,8 @@ class Task
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function deleteTask(): bool {
+    public function deleteTask(): bool
+    {
         $query = "DELETE FROM " . $this->db_table . " WHERE id = $this->id;";
         $stmt = $this->connection->prepare($query);
         if ($stmt->execute()) {
@@ -70,12 +71,23 @@ class Task
         return false;
     }
 
-    public function updateCompletion(): bool {
+    public function updateCompletion(): bool
+    {
         $query = "UPDATE " . $this->db_table . " SET is_completed = TRUE WHERE id = $this->id AND task_name = $this->task_name;";
         $stmt = $this->connection->prepare($query);
         if ($stmt->execute()) {
             return true;
         }
         return false;
-}
+    }
+
+    public function updateStatus(): bool {
+        $query = "UPDATE " . $this->db_table . " SET fail = FALSE WHERE id = $this->id AND task_name = $this->task_name;";
+        $stmt = $this->connection->prepare($query);
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
 }

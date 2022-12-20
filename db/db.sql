@@ -12,5 +12,6 @@ CREATE TABLE _task (
     task TEXT,
     cost INT NOT NULL DEFAULT (10),
     is_completed BOOLEAN NOT NULL DEFAULT (FALSE),
+    fail BOOLEAN NOT NULL DEFAULT (FALSE),
     CONSTRAINT author FOREIGN KEY(user_id) REFERENCES _user(id)
 );

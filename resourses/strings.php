@@ -22,6 +22,7 @@ const INFORMATION_ABOUT_TASK = "========%s======== \n %s \n Необходимо
 const INFORMATION_ABOUT_STATUS = "Вы успешно завершили задачу! Поздравляю!";
 const INFORMATION_ABOUT_FAIL_TASK = "Надеюсь, что в следующий раз получится :( Не отчаивайтесь. Задача отмечена как не выполенная";
 const INFORMATION_ABOUT_COMPLETED_TASK = "---------------\n ✅ Задание закончено. Название: %s \n Нужно было закончить к %s. Стоило %s баллов\n ---------------";
+const INFORMATION_ABOUT_FAIL_TASK = "---------------\n ⚠️ Задание не было выполено :(. Название: %s \n Нужно было закончить к %s. Стоило %s баллов\n ---------------";
 const INFORMATION_ABOUT_NOT_COMPLETED_TASK = "---------------\n ❌ Название: %s \n Нужно закончить к %s. Стоит %s баллов\n---------------";
 
 
