@@ -3,6 +3,7 @@ const NAME = "name";
 const DATE = "date";
 const TASK = 'task';
 const COST = 'cost';
+const FLAG = 'flag';
 const _ID = 'id';
 const USER_ID = 'user_id';
 const IS_COMPLETED = "is_completed";

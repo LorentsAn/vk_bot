@@ -61,7 +61,7 @@ class MakeTask extends Action
                         return null;
                     }
                     if (!$this->validateDate($value)) {
-                        $this->sendMessage($user_id, WRONG_DATA);
+                        $this->sendMessage($user_id, WRONG_DATE);
                         return null;
                     }
                     $value = "'".$value."'";

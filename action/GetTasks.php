@@ -5,6 +5,12 @@ class GetTasks extends Action
     function execute(User $user, array $args): void
     {
         $values = $this->validateArgs($user->id, $args);
+        if ($values == null) {
+            $this->sendMessage($user->id, ERROR_OCCURRED);
+            return;
+        }
+        $values = $this->createDefaultValues($values);
+
         $empty_task = new Task(0, $user->id, "", "", "", $user->getConnection(), 0);
         $result = $empty_task->getByUser();
         if (count($result) == 0) {
@@ -17,10 +23,28 @@ class GetTasks extends Action
                 $this->sendMessage($user->id, $output_string);
                 $output_string = "";
             }
-            $output_string = $output_string . $this->toString($task);
+            $output_string = $output_string . $this->chooseTask($values[FLAG], $task);
         }
         $this->sendMessage($user->id, $output_string);
     }
+
+    private function chooseTask(string $flag, array $task): string {
+        if ($flag == 'w') {
+            $completed_day = $task[COMPLETED_DATE];
+            if (strtotime($completed_day) < strtotime("next Monday")
+                && strtotime($completed_day) >= strtotime("last Monday")) {
+                return $this->toString($task);
+            }
+        } else if ($flag == 'a') {
+            return $this->toString($task);
+        } else {
+            $is_completed = $task[IS_COMPLETED];
+            if (!$is_completed) {
+                return $this->toString($task);
+            }
+        }
+        return "";
+}
 
     private function toString(array $task): string {
         $task_name = $task[TASK_NAME];
@@ -39,7 +63,32 @@ class GetTasks extends Action
 
     function validateArgs(int $user_id, array $args): ?array
     {
+        $res = null;
+        foreach ($args as $arg) {
+            if ($arg == null) {
+                continue;
+            }
+            $arg_type = trim(explode("=", $arg)[0]);
+            $value = trim(str_replace("'", "", explode("=", $arg)[1]));
+            $value = str_replace("\"", "", $value);
+            $value = str_replace(",", "", $value);
+            if ($arg_type == FLAG) {
+                if ($value == null) {
+                    $this->sendMessage($user_id, EMPTY_FLAG);
+                    return null;
+                }
+                $res[FLAG] = "'".$value."'";
+            }
+        }
         // TODO: Implement validateArgs() method.
-        return [];
+        return $res;
+    }
+
+    private function createDefaultValues(array $values): array
+    {
+        if (!$values[FLAG]) {
+            $values[FLAG] = 'c';
+        }
+        return $values;
     }
 }
