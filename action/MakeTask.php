@@ -72,6 +72,10 @@ class MakeTask extends Action
                             $this->sendMessage($user_id, ENTERED_PRICE_NOT_NUMBER);
                             return null;
                         }
+                        if ($value > MAX_COST_FOR_TASK) {
+                            $this->sendMessage($user_id, TOO_BIG_COST);
+                            $value = MAX_COST_FOR_TASK;
+                        }
                     }
             }
             $res[$arg_type] = $value;

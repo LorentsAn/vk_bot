@@ -37,8 +37,7 @@ class MessageHandler {
                 }
             }
         } else {
-            $action = $this->storage->getAction(GET_HELP);
-            $action ->execute($user, []);
+            bot_sendMessage($user->id, INVALID_COMMAND, VK_API_ACCESS_TOKEN);
             return 'ok';
         }
         return "Возникла ошибка";

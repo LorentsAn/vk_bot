@@ -33,6 +33,8 @@ class CloseTask extends Action {
             $user->updateBalance($user->getBalance() - $task->cost);
             $this->sendMessage($user->id, INFORMATION_ABOUT_CLOSE_FAIL_TASK);
         }
+        $getScore = new GetScore();
+        $getScore->execute($user, []);
     }
 
     function validateArgs(int $user_id, array $args): ?array

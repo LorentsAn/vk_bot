@@ -59,7 +59,7 @@ class GetTasks extends Action
 
     function validateArgs(int $user_id, array $args): ?array
     {
-        $res = null;
+        $res = [];
         foreach ($args as $arg) {
             if ($arg == null) {
                 continue;
