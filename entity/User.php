@@ -14,7 +14,7 @@ class User {
     }
 
     public function createUser(): bool {
-        $query = "INSERT INTO " . $this->db_table . "(id, balance) VALUES (" . $this->id . ", " . $this->balance .");";
+        $query = "INSERT INTO  $this->db_table (id, balance) VALUES ( $this->id , $this->balance );";
         $stmt = $this->connection->prepare($query);
         if ($stmt->execute()) {
             return true;
@@ -42,7 +42,7 @@ class User {
         $query = "SELECT * FROM " . $this->db_table . " WHERE id = " . $this->id . ";";
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
-        $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+        $dataRow = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if (count($dataRow) == 0) {
             return false;
         }
