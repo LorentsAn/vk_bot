@@ -11,6 +11,9 @@ class MessageHandler {
     public function process_message($data): string {
         $chat_id = $data->object->peer_id;
         $user_id = $data->object->from_id;
+        if ($user_id < 0) {
+            $user_id *= -1;
+        }
         $message = $data->object->text;
 
         $args = $this->getArgs($message);
